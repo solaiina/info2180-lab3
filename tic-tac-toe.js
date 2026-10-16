@@ -1,11 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
   const squares = document.querySelectorAll("#board div");
   const status = document.getElementById("status");
+  const newGame = document.querySelector("button.btn");
   const gameState = new Array(9).fill(null);
   let currentPlayer = "X";
 
-  const new = document.querySelectorAll("#btn button")
-  
   const winningLines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -35,6 +34,9 @@ document.addEventListener("DOMContentLoaded", function () {
     square.classList.add("square");
 
     square.addEventListener("click", function () {
+        if (gameState[index] !== null) {
+        return;
+      }
       square.textContent = currentPlayer;
       square.classList.add(currentPlayer);
       gameState[index] = currentPlayer;
@@ -55,9 +57,22 @@ document.addEventListener("DOMContentLoaded", function () {
     square.addEventListener("mouseleave", function () {
       square.classList.remove("hover");
     });
-
-    new.addEventListener("click", function(){
-    square.textContent == null;
   });
+
+  newGame.addEventListener("click", function () {
+    squares.forEach(function (square) {
+      square.textContent = "";
+      square.classList.remove("X");
+      square.classList.remove("O");
+    });
+
+    gameState.forEach(function (value, index) {
+      gameState[index] = null;
+    });
+
+    currentPlayer = "X";
+    status.textContent =
+      "Move your mouse over a square and click to play an X or an O.";
+    status.classList.remove("you-won");
   });
 });
